@@ -10,14 +10,10 @@ import java.util.List;
 @Component
 public class CombinationSumUtil {
 
-    List<long[]> freq = new ArrayList<>();
-    List<List<Long>> ans = new ArrayList<>();
-    List<Long> sequence = new ArrayList<>();
-
     public List<List<Long>> combinationSum2(long[] candidates, long target) {
-        freq.clear();
-        ans.clear();
-        sequence.clear();
+        List<long[]> freq = new ArrayList<>();
+        List<List<Long>> ans = new ArrayList<>();
+        List<Long> sequence = new ArrayList<>();
         Arrays.sort(candidates);
         for (long num : candidates) {
             int size = freq.size();
@@ -27,25 +23,25 @@ public class CombinationSumUtil {
                 ++freq.get(size - 1)[1];
             }
         }
-        dfs(0, target);
+        dfs(0, target, freq, ans, sequence);
         return ans;
     }
 
-    public void dfs(int pos, long rest) {
+    public void dfs(int pos, long rest, List<long[]> freq, List<List<Long>> ans, List<Long> sequence) {
         if (rest == 0) {
-            ans.add(new ArrayList<Long>(sequence));
+            ans.add(new ArrayList<>(sequence));
             return;
         }
         if (pos == freq.size() || rest < freq.get(pos)[0]) {
             return;
         }
 
-        dfs(pos + 1, rest);
+        dfs(pos + 1, rest, freq, ans, sequence);
 
         long most = Math.min(rest / freq.get(pos)[0], freq.get(pos)[1]);
         for (long i = 1; i <= most; ++i) {
             sequence.add(freq.get(pos)[0]);
-            dfs(pos + 1, rest - i * freq.get(pos)[0]);
+            dfs(pos + 1, rest - i * freq.get(pos)[0], freq, ans, sequence);
         }
         for (long i = 1; i <= most; ++i) {
             sequence.remove(sequence.size() - 1);
