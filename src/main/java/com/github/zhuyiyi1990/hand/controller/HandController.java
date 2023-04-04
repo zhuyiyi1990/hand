@@ -34,4 +34,19 @@ public class HandController {
         }
     }
 
+    @PostMapping("/combinationSum2One")
+    public Result<List<Long>> combinationSum2One(@RequestBody CombinationSumRequestVo vo) {
+        Result<List<Long>> result = new Result<>();
+        try {
+            List<Long> data = handService.combinationSum2One(vo.getCandidates(), vo.getTarget());
+            result.setSuccess(true);
+            result.setCode(CommonConstant.SC_OK_200);
+            result.setResult(data);
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return result.error500(e.getMessage());
+        }
+    }
+
 }

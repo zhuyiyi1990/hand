@@ -18,4 +18,9 @@ public class HandServiceImpl implements HandService {
         return combinationSumUtil.combinationSum2(candidates, target);
     }
 
+    @Override
+    public List<Long> combinationSum2One(long[] candidates, long target) {
+        return combinationSumUtil.combinationSum2One(candidates, target);
+    }
+
 }
